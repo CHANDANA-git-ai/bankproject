@@ -1,0 +1,130 @@
+ Bank Customer Management System
+
+ 1. Introduction
+
+The Bank Customer Management System is a simple, menu-driven command line application developed using Core Java, JDBC, and MySQL. It is designed to manage bank customer records efficiently while demonstrating the use of layered architecture in Java applications.
+
+ 2. Objectives
+
+* To understand Core Java and JDBC connectivity
+* To implement CRUD operations using MySQL
+* To follow layered architecture (DTO, DAO, Service, Main)
+* To build a simple menu-driven banking application
+
+3. Scope of the Project
+
+This project focuses only on managing customer-related information in a bank. It allows adding, viewing, searching, updating, and deleting customer records. Advanced banking features like transactions and accounts are not included.
+
+ 4. Technology Stack
+
+* Programming Language: Java (Core Java)
+* Database: MySQL
+* Connectivity: JDBC
+* IDE: Eclipse / IntelliJ IDEA / NetBeans
+* Server: MySQL Server
+
+ 5. System Requirements
+
+ Hardware Requirements
+
+* Processor: Intel i3 or above
+* RAM: Minimum 4 GB
+* Hard Disk: 10 GB free space
+
+Software Requirements
+
+* JDK 8 or above
+* MySQL Server
+* MySQL Connector/J
+* Any Java IDE
+
+ 6. Database Design
+
+ Database Name
+
+bank_db
+
+Table: customers
+
+| Column Name | Data Type                | Description            |
+| ----------- | ------------------------ | ---------------------- |
+| id          | INT (PK, AUTO_INCREMENT) | Customer ID            |
+| name        | VARCHAR(100)             | Customer Name          |
+| email       | VARCHAR(100)             | Customer Email         |
+| mobile      | VARCHAR(15)              | Customer Mobile Number |
+| city        | VARCHAR(50)              | Customer City          |
+
+ 7. Project Architecture
+
+The project follows a layered architecture to separate responsibilities and improve maintainability.
+
+ 7.1 DTO Layer (Customer.java)
+
+The DTO layer represents the customer entity. It contains private variables, constructors, getters, and setters to transfer customer data between layers.
+
+ 7.2 DAO Layer (CustomerDAO.java)
+
+The DAO layer handles all database-related operations such as inserting, retrieving, updating, and deleting customer records using JDBC and SQL queries.
+
+ 7.3 Service Layer (CustomerService.java)
+
+The Service layer contains business logic and interacts with the DAO layer. It handles user input, processes data, and displays results to the user.
+
+ 7.4 Utility Layer (DBConnection.java)
+
+This class is responsible for establishing a connection between the Java application and the MySQL database using JDBC.
+
+ 7.5 Main Layer (CustomerApp.java)
+
+The Main class provides a menu-driven interface for users to interact with the system and invoke service-layer methods.
+
+ 8. Functional Features
+
+* Add new customer
+* View all customers
+* Search customer by ID
+* Update customer mobile number
+* Delete customer record
+* View total customer count
+* View customers by city
+
+ 9. Sample Menu
+
+1. Add Customer
+2. View Customers
+3. Search Customer by ID
+4. Update Customer Mobile
+5. Delete Customer
+6. Customer Count
+7. View Customers by City
+8. Exit
+
+ 10. Advantages
+
+* Simple and easy to use
+* Clear separation of layers
+* Reduces code redundancy
+* Easy to maintain and extend
+
+ 11. Limitations
+
+* No authentication or authorization
+* No transaction or account management
+* Command-line interface only
+
+ 12. Future Enhancements
+
+* Add account and transaction modules
+* Implement user authentication
+* Convert application to GUI or web-based
+* Add validation and exception handling
+
+ 13. Conclusion
+
+The Bank Customer Management System successfully demonstrates the use of Core Java, JDBC, and MySQL to build a layered, menu-driven application. It serves as a strong foundation for understanding database-driven Java applications.
+
+ 14. References
+
+* Java Documentation
+* MySQL Documentation
+* JDBC API Guide
