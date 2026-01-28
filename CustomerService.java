@@ -1,20 +1,18 @@
 package bank;
 
-import java.util.List;
 import java.util.Scanner;
 
 /*
  * Service layer
- * Handles user input and business logic
- * Calls DAO methods
+ * Contains business logic and user interaction
  */
 public class CustomerService {
 
-    private final CustomerDAO dao = new CustomerDAO();
-    private final Scanner sc = new Scanner(System.in);
+    CustomerDAO dao = new CustomerDAOImpl();
+    Scanner sc = new Scanner(System.in);
 
-    // Add new customer
-    public void addCustomer() {
+    // Create customer
+    public void createCustomer() throws Exception {
         System.out.print("Name: ");
         String name = sc.nextLine();
         System.out.print("Email: ");
@@ -23,72 +21,75 @@ public class CustomerService {
         String mobile = sc.nextLine();
         System.out.print("City: ");
         String city = sc.nextLine();
+        System.out.print("Initial Balance: ");
+        double bal = Double.parseDouble(sc.nextLine());
 
-        dao.addCustomer(new Customer(0, name, email, mobile, city));
+        dao.addCustomer(new CustomerDTO(name, email, mobile, city, bal));
+        System.out.println("Account Created Successfully");
     }
 
-    // Display all customers
-    public void showCustomers() {
-        List<Customer> list = dao.viewCustomers();
-        list.forEach(c ->
-                System.out.println(c.getId()+" | "+c.getName()+" | "+
-                        c.getEmail()+" | "+c.getMobile()+" | "+c.getCity()));
+    // View customers
+    public void showCustomers() throws Exception {
+        dao.viewCustomers();
     }
 
-    // Search customer by ID
-    public void searchCustomer() {
-        System.out.print("Enter Customer ID: ");
-        int id = Integer.parseInt(sc.nextLine());
-
-        Customer c = dao.getCustomerById(id);
-        if (c != null)
-            System.out.println(c.getId()+" | "+c.getName()+" | "+
-                    c.getEmail()+" | "+c.getMobile()+" | "+c.getCity());
-        else
-            System.out.println("Customer not found");
-    }
-
-    // Update mobile number
-    public void updateMobile() {
+    // Update customer
+    public void updateCustomer() throws Exception {
         System.out.print("Customer ID: ");
         int id = Integer.parseInt(sc.nextLine());
+
+        System.out.print("New Name: ");
+        String name = sc.nextLine();
+        System.out.print("New Email: ");
+        String email = sc.nextLine();
         System.out.print("New Mobile: ");
         String mobile = sc.nextLine();
+        System.out.print("New City: ");
+        String city = sc.nextLine();
+
+        CustomerDTO c = new CustomerDTO();
+        c.setId(id);
+        c.setName(name);
+        c.setEmail(email);
+        c.setMobile(mobile);
+        c.setCity(city);
 
         System.out.println(
-                dao.updateCustomerMobile(id, mobile)
-                        ? "Mobile updated successfully"
-                        : "Update failed"
+            dao.updateCustomer(c) ? "Customer Updated Successfully" : "Customer Not Found"
         );
     }
 
     // Delete customer
-    public void deleteCustomer() {
+    public void deleteCustomer() throws Exception {
         System.out.print("Customer ID: ");
         int id = Integer.parseInt(sc.nextLine());
 
         System.out.println(
-                dao.deleteCustomer(id)
-                        ? "Customer deleted"
-                        : "Delete failed"
+            dao.deleteCustomer(id) ? "Customer Deleted Successfully" : "Customer Not Found"
         );
     }
 
-    // Show total number of customers
-    public void showCustomerCount() {
-        System.out.println("Total Customers: " + dao.getCustomerCount());
+    // Deposit
+    public void depositMoney() throws Exception {
+        System.out.print("Customer ID: ");
+        int id = Integer.parseInt(sc.nextLine());
+        System.out.print("Amount: ");
+        double amt = Double.parseDouble(sc.nextLine());
+
+        System.out.println(
+            dao.deposit(id, amt) ? "Deposit Successful" : "Deposit Failed"
+        );
     }
 
-    // Show customers based on city
-    public void showCustomersByCity() {
-        System.out.print("Enter City: ");
-        String city = sc.nextLine();
+    // Withdraw
+    public void withdrawMoney() throws Exception {
+        System.out.print("Customer ID: ");
+        int id = Integer.parseInt(sc.nextLine());
+        System.out.print("Amount: ");
+        double amt = Double.parseDouble(sc.nextLine());
 
-        List<Customer> list = dao.getCustomersByCity(city);
-        if (list.isEmpty())
-            System.out.println("No customers found");
-        else
-            list.forEach(c ->
-                    System.out.println(c.getId()+" | "+c.getName()));
+        System.out.println(
+            dao.withdraw(id, amt) ? "Withdrawal Successful" : "Insufficient Balance"
+        );
     }
 }
